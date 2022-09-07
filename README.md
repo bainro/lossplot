@@ -1,5 +1,4 @@
-# lossplot
-![alt text](https://rkbain.com/images/loss.png)
+![alt text](https://rkbain.com/images/loss.png | width=300)
 visualize multiple loss landscapes simultaneously in browser. 7 second video showing basic example: [Link](https://youtu.be/sPv1yAkiLd8)
 
 There's a demo here: [Link](https://rkbain.com/loss). <br/>
