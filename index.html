@@ -1,0 +1,339 @@
+<html>
+<head>
+    <style>
+        body, html {
+            overflow: hidden;
+            background: black;
+            margin: 0;
+            user-select: none;
+        }
+
+        .modebar-group {
+            background: rgb(255 255 255 / 72%) !important;
+        }
+
+        .plotly-plot {
+            width: 100%;
+        }
+
+        .main-svg {
+            background: transparent !important;
+        }
+
+        #loading-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 3;
+            font-family: sans-serif;
+            font-size: 2em;
+        }
+
+        #selection-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 1;
+            font-family: sans-serif;
+            font-size: 2em;
+        }
+
+        #spatial-container { 
+            justify-content: center;
+            width: 78%;
+            display: inline-flex;
+            position: absolute;
+        }
+
+        #data-err {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 66vh;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 1;
+            font-family: sans-serif;
+            font-size: 1.2em;
+            display: none;
+            pointer-events: none;
+        }
+
+        #inner-err {
+            width: 50%;
+            text-align: center;
+            padding: 1em;
+            background: #1d1d1d;
+            border-radius: 1em;
+            border: 3px solid red;
+        }
+
+        #select-x-y {
+            padding: 1em;
+            background: #1d1d1d;
+            border-radius: 1em;
+            width: 36%;
+            border: 3px solid gray;
+            text-align: center;
+        }
+
+        li {
+            background: gray;
+            border: 2px solid black;
+            text-align: center;
+            margin: 0.3em;
+            border-radius: 0.5em;
+            padding: 0.1em;
+            text-shadow: 2px 2px 2px black;
+            box-shadow: 3px 3px 0px 0px grey;
+        }
+
+        li:hover {
+            background: #676767;
+            color: whitesmoke;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px 0px #676767;
+        }
+
+        li.clicked, li.clicked:hover {
+            background: #3d3d3d;
+            margin-right: calc(.3em - 2px);
+            margin-bottom: calc(.3em - 2px);
+            box-shadow: 1px 1px 0px 0px black;
+            pointer-events: none;
+        }
+
+        #list-columns {
+            width: 50%;
+            list-style-type: none;
+            max-height: 33%;
+            overflow: auto;
+            padding: 0;
+        }
+
+        #list-parent {
+            display: flex;
+            justify-content: center;
+        }
+
+        #list-columns.done > li.x-y, li.exp-id {
+            display: none;
+        }
+
+        #data-panel {
+            background: #262628;
+            width: 20%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        .grid3x2 {
+            min-height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        .grid3x2 > div {
+            display: flex; 
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        tr, td, tbody {
+            border: inherit;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        table {
+            border: 1px solid #848484;
+            background: #101010;
+            color: white;
+            border-collapse: collapse;
+            box-shadow: 1px 1px 8px black, -1px 0px 8px black;
+        }
+
+        #data-table-parent {
+            display: flex;
+            justify-content: center;
+        }
+
+        input[type='checkbox'] {
+            height: 1.2em;
+            width: 1.2em;
+            cursor: pointer;
+        }
+
+        #panel-header {
+            width: 100%;
+            text-align: center;
+            margin: 2.6em 0 1em 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 9px black;
+        }
+
+        #logo {
+            margin-top: 0.5em;
+            margin-bottom: -0.5em;
+            text-decoration: underline;
+            font-size: 3.3em;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0px 0px 5px blue;
+            font-family: system-ui;
+        }
+
+        #buttons-container {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: inherit;
+            margin-bottom: 1em;
+            align-items: center;
+        }
+
+        #buttons-container > button {
+            color: white;
+            background: black;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 12px;
+            border: 2px solid #2e2e2e;
+            cursor: pointer;
+            transition: background-color .15s;
+            outline: none;
+            display: block;
+            width: 50%;
+            margin: 0.1em 0;
+        }
+
+        #buttons-container > button:hover {
+            background: #151616;
+        }
+
+        #buttons-container > button.active {
+            background: #000044;
+            border: 2px solid #262628;;
+            box-shadow: 1px 1px 4px #000000 inset, -1px -1px 4px #000000 inset;
+        }
+
+        #buttons-container > button.active:hover {
+            background: #000036;
+        }
+
+        #buttons-container > button:active {
+            background: #1a1d1d;
+        }
+
+        canvas { cursor: pointer; }
+
+        #load-wizard {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 3;
+            font-family: sans-serif;
+            font-size: 1em;
+        }
+
+        #load-modal {
+            width: 18vw;
+            height: 30vh;
+            background: #1d1d1d;
+            padding: 2em;
+            border-radius: 2em;
+            font-size: 1.3em;
+            border: darkgray 6px solid;
+            text-align: center;
+        }
+
+        a { color: inherit; } 
+    </style>
+</head>
+<body>
+<div id="loading-cover">Loading The Data...</div>
+<div id="load-wizard">
+    <div id="load-modal">
+    <div style="margin-bottom: 1.6em;">
+        This tool requires csv data with 4 data column types, which you are free to name as you choose: x, y, loss, and experiment ids. 
+        You can view the demo data <a href="https://raw.githubusercontent.com/bainro/loss-landscape-viz/master/combo_plots.csv" target="_blank">here</a>
+    </div>
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" />
+    <br>
+    <div style="margin: 0.9em 0;">or</div>
+    <input type="file" id="file" name="file" accept=".csv" onchange="loadCustomData(this)" style="margin-right: -6em; font-size: 0.8em;">
+    </div>
+</div>
+<div id="selection-cover">
+    <div id="select-x-y">
+        <span id="select-prompt"></span>
+        <div id="list-parent">
+            <ul id="list-columns"></ul>
+        </div>
+    </div>
+</div>
+<div id="data-panel">
+    <div style="display: flex; justify-content: center;"><span id="logo">Loss Plot</span></div>
+    <div id="panel-header">Select up to 6 experiments</div>
+    <div id="data-table-parent">
+        <table>
+        </table>
+    </div>
+    <div id="buttons-container">
+        <button id="home" title="resets all plots to the home position" onclick="globalHome()">Home</button>
+        <button id="sync" title="toggles synchronized plot interactions" onclick="toggleSync(this)">Sync</button>
+        <button id="clip" title="toggles clipping the corners" onclick="toggleClip(this)">Clip</button>
+        <button id="contours" title="toggles showing 2D contours" onclick="toggleContours(this)">Contours</button>
+        <button id="load" onclick="showLoadWizard()">Load</button>
+    </div>
+</div>
+<div id="data-err">
+    <div id="inner-err">We experienced an error while parsing the data. Please rearrange the bottom plot so the first axis is experiment IDs and the last three are x, y, and z spatial coordinates.</div>
+</div>
+<div id="spatial-container" class="grid3x2">
+    <div><div id='spatial-1' class="plotly-plot"></div></div>
+    <div><div id='spatial-2' class="plotly-plot"></div></div>
+    <div><div id='spatial-3' class="plotly-plot"></div></div>
+    <div><div id='spatial-4' class="plotly-plot"></div></div>
+    <div><div id='spatial-5' class="plotly-plot"></div></div>
+    <div><div id='spatial-6' class="plotly-plot"></div></div>
+</div>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src='./index.js'></script>
+</body>
+</html>
