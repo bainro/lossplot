@@ -1,7 +1,6 @@
 <!-- ![](https://rkbain.com/images/loss.png) -->
 <img src="https://rkbain.com/images/loss.png" width="750" height="480" />
-Use lossplot to visualize multiple loss landscapes simultaneously in browser. <br/>
-7 second video showing basic example: [Link](https://youtu.be/sPv1yAkiLd8)
+Use lossplot to visualize multiple loss landscapes simultaneously in browser. <br/><br/>
 
 There's a demo here: [Link](https://rkbain.com/loss). <br/>
 Be patient as ~10MB csv file has to be downloaded and parsed. <br/>
