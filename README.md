@@ -9,8 +9,8 @@ There's some other dataset links here: [Link 1](https://rkbain.com/loss/#1) [Lin
 ```
 git clone https://github.com/bainro/lossplot.git
 cd lossplot
-# can use python -V to ensure python3 is being used
-python -m http.server 8080
+# you can use "python -V" to ensure python3 is being used
+python -m http.server 8080 &
 ```
 Go to localhost:8080 in your browser of choice 😎
 
