@@ -1,5 +1,5 @@
 # lossplot
-visualize multiple loss landscapes simultaneously in browser
+visualize multiple loss landscapes simultaneously in browser. 7 second video showing basic example: [Link](https://youtu.be/sPv1yAkiLd8)
 
 There's a demo here: [Link](https://rkbain.com/loss). <br/>
 Be patient as ~10MB csv file has to be downloaded and parsed. <br/>
