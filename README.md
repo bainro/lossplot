@@ -1,5 +1,5 @@
-![](https://rkbain.com/images/loss.png)
-<img src="https://rkbain.com/images/loss.png" width="200" height="400" />
+<!-- ![](https://rkbain.com/images/loss.png) -->
+<img src="https://rkbain.com/images/loss.png" width="400" height="300" />
 visualize multiple loss landscapes simultaneously in browser. 7 second video showing basic example: [Link](https://youtu.be/sPv1yAkiLd8)
 
 There's a demo here: [Link](https://rkbain.com/loss). <br/>
