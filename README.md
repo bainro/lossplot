@@ -1,8 +1,8 @@
 # lossplot
 visualize multiple loss landscapes simultaneously in browser
 
-There's a demo here: [Link](https://rkbain.com/loss). 
-Be patient as ~10MB csv file has to be downloaded and parsed. 
+There's a demo here: [Link](https://rkbain.com/loss). <br/>
+Be patient as ~10MB csv file has to be downloaded and parsed. <br/>
 There's some other dataset links here: [Link 1](https://rkbain.com/loss/#1) [Link 2](https://rkbain.com/loss/#2) [Link 3](https://rkbain.com/loss/#3)
 
 ### Simple setup:
